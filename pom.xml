@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.2.3</version>
+    <relativePath/>                         <!-- lookup parent from repository -->
+  </parent>
+  <packaging>pom</packaging>
+  <groupId>com.example</groupId>
+  <artifactId>rxbatch</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>rxbatch_graalvm</name>
+  <description>Demo project for Spring Boot</description>
+
+  <properties>
+    <java.version>21</java.version>
+    <start-class>com.example.Application</start-class>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.graalvm.buildtools</groupId>
+        <artifactId>native-maven-plugin</artifactId>
+        <version>0.10.1</version>
+        <extensions>true</extensions>
+        <executions>
+          <execution>
+            <id>build-native</id>
+            <goals>
+              <goal>compile-no-fork</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+          <execution>
+            <id>test-native</id>
+            <goals>
+              <goal>test</goal>
+            </goals>
+            <phase>test</phase>
+          </execution>
+        </executions>
+        <configuration>
+          <!-- Mockito is not supported -->
+          <skipNativeTests>true</skipNativeTests>
+          <mainClass>com.example.Application</mainClass> <!-- Specify your main class -->
+        </configuration>
+      </plugin>
+
+    </plugins>
+
+  </build>
+  <modules>
+    <module>rxbatch-webapp</module>
+    <module>rxbatch-core</module>
+    <module>rxbatch-service</module>
+  </modules>
+</project>
